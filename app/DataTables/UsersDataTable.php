@@ -23,8 +23,18 @@ class UsersDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('actions', function ($row) {
-                return '';
+                $csrf = csrf_field();
+                $route = route('impersonate.start', $row->id);
+                return <<<HTML
+                    <form method="POST" action="{$route}" onsubmit="return confirm('Impersonate {$row->name}?')">
+                        {$csrf}
+                        <button class="px-4 py-1 bg-gray-800 hover:bg-gray-700 text-white border border-transparent rounded-md">
+                            Impersonate
+                        </button>
+                    </form>
+                HTML;
             })
+            ->rawColumns(['actions'])
             ->setRowId('id');
     }
 
@@ -34,7 +44,7 @@ class UsersDataTable extends DataTable
     public function query(User $model): QueryBuilder
     {
         return $model->newQuery()
-            ->select(['users.id','users.name','users.email','users.phone'])
+            ->select(['users.id', 'users.name', 'users.email', 'users.phone'])
             ->where('role', '!=', 'admin')
             ->withCount([
                 'unreadNotifications'

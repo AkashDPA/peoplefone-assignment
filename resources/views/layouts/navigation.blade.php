@@ -15,9 +15,21 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
-                        {{ __('Users') }}
-                    </x-nav-link>
+
+                    @if(Auth::user()->isAdmin())
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                            {{ __('Users') }}
+                        </x-nav-link>
+                    @endif
+                    {{-- Stop impersonation --}}
+                   @if(session('impersonator_id'))
+                           <x-nav-link
+                               :href="route('impersonate.stop')"
+                               class="!text-amber-900 !border-amber-500 hover:!text-amber-800 hover:!border-amber-400 bg-amber-100">
+                               {{ __('Stop impersonation') }}
+                           </x-nav-link>
+                       </form>
+                   @endif
                 </div>
 
             </div>
