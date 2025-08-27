@@ -42,4 +42,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function isAdmin(): bool
+    {
+        return $this->role == 'admin';
+    }
+
+    /* ---------- Relationships ---------- */
+    public function notifications()
+    {
+        return $this->hasMany(\App\Models\UserNotification::class);
+    }
+
+    public function unreadUserNotifications()
+    {
+        // only unexpired notifications count as unread
+        return $this->notifications()
+            ->whereNull('read_at')
+            ->whereHas('notification', fn ($n) => $n->where('expires_at', '>', now()));
+    }
+
 }
