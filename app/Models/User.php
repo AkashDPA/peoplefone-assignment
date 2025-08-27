@@ -55,7 +55,7 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\UserNotification::class);
     }
 
-    public function unreadUserNotifications()
+    public function unreadNotifications()
     {
         // only unexpired notifications count as unread
         return $this->notifications()
