@@ -47,6 +47,29 @@
             @endif
         </div>
 
+        <div>
+            <x-input-label for="phone" :value="__('Phone')" />
+            <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full" :value="old('phone', $user->phone)" required autofocus autocomplete="phone" />
+            <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+        </div>
+
+        
+        <label for="notifications_enabled" class="inline-flex items-center cursor-pointer gap-3">
+        
+            <x-switch-toggle
+                id="notifications_enabled"
+                name="notifications_enabled"
+                :checked="old('notifications_enabled', $user->notifications_enabled) == 1"
+            />
+        
+        
+            <x-input-label for="notifications_enabled" :value="__('On-screen Notifications')" />
+
+            <x-input-error class="mt-2" :messages="$errors->get('notifications_enabled')" />
+        </label>
+        
+        
+        
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
@@ -56,7 +79,7 @@
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
+                    class="text-sm text-green-600"
                 >{{ __('Saved.') }}</p>
             @endif
         </div>
