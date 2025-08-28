@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminNotificationController;
 use App\Http\Controllers\ImpersonationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -36,5 +37,12 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::post('/impersonate/{user}', [ImpersonationController::class,'start'])->name('impersonate.start');
 });
 Route::get('/impersonate/stop', [ImpersonationController::class,'stop'])->middleware('auth')->name('impersonate.stop');
+
+Route::middleware(['auth','admin'])
+    ->prefix('admin/')
+    ->as('admin.')
+    ->group(function () {
+        Route::resource('notifications', AdminNotificationController::class);
+    });
 
 require __DIR__.'/auth.php';

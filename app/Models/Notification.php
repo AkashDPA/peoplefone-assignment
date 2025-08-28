@@ -20,7 +20,7 @@ class Notification extends Model
     ];
 
     protected $casts = [
-        'expires_at' => 'datetime',
+        'expires_at' => 'date:Y-m-d',
     ];
 
     /* ---------- Relationships ---------- */

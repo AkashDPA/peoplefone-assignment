@@ -20,6 +20,9 @@
                         <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                             {{ __('Users') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.notifications.index')" :active="request()->routeIs('admin.notifications.*')">
+                            {{ __('Notifications') }}
+                        </x-nav-link>
                     @endif
                     {{-- Stop impersonation --}}
                    @if(session('impersonator_id'))
