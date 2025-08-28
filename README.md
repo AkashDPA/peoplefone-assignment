@@ -3,7 +3,10 @@
 ## Prerequisites
 - PHP 8.3 or higher
 - Composer
+- NPM
 - Database (MySQL, PostgreSQL or Sqlite)
+
+---
 
 ## Installation Steps
 
@@ -40,20 +43,31 @@
    php artisan migrate
    ```
 
-
-5. **seed dummy**
+6. **seed dummy**
    ```bash
    php artisan db:seed
    ```
 
-6. **Start the development server**
+7. **Frontend dependencies**
+   ```bash
+   npm install && npm run dev
+   ```
+
+8. **Start the development server**
    ```bash
    php artisan serve
    ```
 
-7. **Access the application**
+9. **Access the application**
    Open your browser and navigate to `http://localhost:8000`
 
+---
+
+## Admin Creds
+   - Email: admin@gmail.com
+   - Password: password
+```
+---
 
 ## Development Tools
 

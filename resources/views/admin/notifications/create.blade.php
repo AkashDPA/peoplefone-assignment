@@ -50,7 +50,7 @@
                     <select name="user_id" class="w-full border rounded p-2">
                         <option value="">Select…</option>
                         @foreach ($users as $u)
-                            <option value="{{ $u->id }}" @selected(old('user_id') == $u->id)>{{ $u->email }}
+                            <option value="{{ $u->id }}" @selected(old('user_id') == $u->id)>{{ $u->name }}
                             </option>
                         @endforeach
                     </select>

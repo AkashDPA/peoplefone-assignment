@@ -27,7 +27,7 @@ class AdminNotificationController extends Controller
     public function create()
     {
         // for the select—keep light, email is enough
-        $users = User::orderBy('name')->get(['id', 'email', 'name']);
+        $users = User::orderBy('name')->where('role', 'user')->get(['id', 'email', 'name']);
         $types = config('notifications.type');
         return view('admin.notifications.create', compact('users', 'types'));
     }
