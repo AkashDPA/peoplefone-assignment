@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'abstractapi' => [
+        'key' => env('ABSTRACT_API_KEY'),
+        'endpoint' => env('ABSTRACT_API_BASE')
+    ],
 ];
