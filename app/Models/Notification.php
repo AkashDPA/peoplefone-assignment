@@ -30,18 +30,4 @@ class Notification extends Model
         // who received it + read state
         return $this->hasMany(UserNotification::class);
     }
-
-    /* ---------- Scopes ---------- */
-
-    // not expired
-    public function scopeActive(Builder $q): Builder
-    {
-        return $q->where('expires_at', '>', now());
-    }
-
-    // convenience: deliveries to a specific user
-    public function scopeDeliveredTo(Builder $q, int $userId): Builder
-    {
-        return $q->whereHas('deliveries', fn ($d) => $d->where('user_id', $userId));
-    }
 }

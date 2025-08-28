@@ -63,10 +63,10 @@ class AdminNotificationsDataTable extends DataTable
     {
         return [
             Column::make('id')->title('ID'),
-            Column::make('type')->title('Type'),
-            Column::make('short_text'),
+            Column::make('type')->title('Type')->orderable(false),
+            Column::make('short_text')->orderable(false),
             Column::make('expires_at')->searchable(false),
-            Column::make('destination')->searchable(false),
+            Column::make('destination')->searchable(false)->orderable(false),
             Column::make('created_at')->searchable(false),
         ];
     }

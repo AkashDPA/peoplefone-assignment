@@ -11,7 +11,7 @@ class UserNotification extends Model
     use HasFactory;
 
     public $timestamps = false;
-    
+
     protected $fillable = [
         'user_id',
         'notification_id',
@@ -32,17 +32,8 @@ class UserNotification extends Model
         return $this->belongsTo(Notification::class);
     }
 
-    /* Helpers */
-
-    public function markRead(): void
+    public function unread()
     {
-        if (is_null($this->read_at)) {
-            $this->update(['read_at' => now()]);
-        }
-    }
-
-    public function isRead(): bool
-    {
-        return !is_null($this->read_at);
+        return $this->whereHas('notification', fn ($n) => $n->where('expires_at', '>', now()));
     }
 }

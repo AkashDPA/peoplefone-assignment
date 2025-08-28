@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminNotificationController;
 use App\Http\Controllers\ImpersonationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserNotificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,17 +33,28 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware(['auth','admin'])->group(function () {
-    Route::resource('users', UserController::class)->only(['index']);
-    Route::post('/impersonate/{user}', [ImpersonationController::class,'start'])->name('impersonate.start');
-});
-Route::get('/impersonate/stop', [ImpersonationController::class,'stop'])->middleware('auth')->name('impersonate.stop');
+Route::middleware('auth')->group(function () {
+    // Impersonation
+    Route::get('impersonate/stop', [ImpersonationController::class, 'stop'])->name('impersonate.stop');
 
-Route::middleware(['auth','admin'])
-    ->prefix('admin/')
-    ->as('admin.')
-    ->group(function () {
-        Route::resource('notifications', AdminNotificationController::class);
+    // Admin-only
+    Route::middleware('admin')->group(function () {
+        Route::post('impersonate/{user}', [ImpersonationController::class, 'start'])->name('impersonate.start');
+
+        // Users
+        Route::resource('users', UserController::class)->only('index');
+
+        // Admin Notifications
+        Route::prefix('admin')->name('admin.')->group(function () {
+            Route::resource('notifications', AdminNotificationController::class);
+        });
     });
 
-require __DIR__.'/auth.php';
+    // User Notifications
+    Route::prefix('notifications')->name('notifications.')->group(function () {
+        Route::get('/', [UserNotificationController::class, 'index'])->name('index');
+        Route::post('mark-read', [UserNotificationController::class, 'markRead'])->name('mark-read');
+    });
+});
+
+require __DIR__ . '/auth.php';

@@ -24,6 +24,17 @@
                             {{ __('Notifications') }}
                         </x-nav-link>
                     @endif
+
+                    @if(!Auth::user()->isAdmin())
+                        <x-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">
+                            {{ __('Notifications') }}
+                            <span title="Unread notifications" class="bg-yellow-300 text-yellow-800 text-xs font-medium mx-2 px-2.5 py-0.5 rounded-sm">
+                                {{Auth::user()->unreadNotifications()->count()}}
+                            </span>
+                        
+                        </x-nav-link>
+                    @endif
+                    
                     {{-- Stop impersonation --}}
                    @if(session('impersonator_id'))
                            <x-nav-link
